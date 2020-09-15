@@ -1,0 +1,137 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[french]{babel}
+\usepackage{appendixnumberbeamer}
+\usepackage{ulem}
+\usepackage[os=win]{menukeys}
+\usetheme[sectionpage=none,
+          subsectionpage=progressbar,
+          numbering=fraction,
+          progressbar=none,
+          background=light]{metropolis}
+
+\title{Introduction à Python pour la Data Science}
+\subtitle{Cours de statistiques descriptives --- TD}
+\date{2020}
+\author{\textsc{Florent Forest}\vspace{0.2cm}\\
+\includegraphics[height=0.35cm]{./rc/e-mail-envelope-blue}\;\scriptsize{\href{mailto:forest@lipn.univ-paris13.fr}{forest@lipn.univ-paris13.fr}}\\
+\includegraphics[height=0.35cm]{./rc/grid-world-blue}\;\scriptsize{\href{http://florentfo.rest}{http://florentfo.rest}}\\
+\includegraphics[height=0.35cm]{./rc/github-logo-blue}\;\scriptsize{\href{https://github.com/FlorentF9}{FlorentF9}}\\
+}
+\institute{\vfill\hfill
+\includegraphics[height=1.0cm]{./rc/up13_logo}
+\hspace{0.1cm}
+\includegraphics[height=1.0cm]{./rc/supgalilee_logo}}
+
+\begin{document}
+
+  \maketitle
+
+  \begin{frame}{Présentation du cours}
+
+    \textbf{Partie pratique du cours de Statistiques Descriptives (MACS 3).}
+
+    \metroset{block=fill}
+    \begin{block}{Objectifs}
+      \begin{itemize}
+        \item[>] Se familiariser avec le langage Python et les notebooks Jupyter
+        \item[>] Maîtriser les bases des modules de calcul numérique, d'analyse de données, de visualisation et d'apprentissage (\texttt{numpy}, \texttt{pandas}, \texttt{matplotlib}, \texttt{scikit-learn})
+        \item[>] Mettre en pratique des méthodes statistiques 
+        en réalisant des cas d'études concrets issus du domaine aéronautique
+      \end{itemize} 
+    \end{block}
+
+  \end{frame}
+
+  \begin{frame}{Organisation}
+
+    \begin{itemize}
+      \item[>] 6 séances de TD (jeudi 14h-17h \small{\textcolor{red}{sauf la première semaine, décalé à vendredi 18/10}})
+      \item[>] \sout{En salle info} \textcolor{red}{À distance avec séances correction/questions individuelles en visio, sur inscription (Framadate)}
+      \item[>] TDs corrigés publiés au fur et à mesure (Github)
+    \end{itemize}
+
+    \metroset{block=fill}
+    \begin{block}{Les outils}
+      \centering
+      \includegraphics[height=1cm]{./rc/jupyter.png}\;
+      \includegraphics[height=1cm]{./rc/colab.png}\\
+      Aucune installation requise. Seul pré-requis : connexion internet et \textbf{compte Google} (pour synchro Drive).
+    \end{block}
+
+    $\blacktriangleright$ \textbf{\href{https://github.com/FlorentF9/SupGalilee-tdstats}{github.com/FlorentF9/SupGalilee-tdstats}}\\
+    $\blacktriangleright$ \textbf{\href{https://colab.research.google.com}{colab.research.google.com}}\\
+    $\blacktriangleright$ \textbf{\href{https://framadate.org/SupGalilee-tdstats}{framadate.org/SupGalilee-tdstats}}
+    
+  \end{frame}
+
+  \begin{frame}{Utilisation du Framadate}
+
+    \begin{center}
+      $\blacktriangleright$ \textbf{\href{https://framadate.org/SupGalilee-tdstats}{framadate.org/SupGalilee-tdstats}}
+    \end{center}
+
+    \begin{itemize}
+      \item Mot de passe : \textcolor{red}{\texttt{*******}}
+      \item Un TD de 3h est divisé en 12 créneaux de 15 min. S'inscrire sur un créneau, \textcolor{red}{si possible à chaque séance} et \textcolor{red}{en avance}.
+      % \item \textcolor{red}{Pas d'inscription = absence} (sauf justifié par e-mail).
+    \end{itemize}
+
+  \end{frame}
+
+  \begin{frame}{Utilisation de Colab}
+
+    \begin{center}
+      \includegraphics[height=1cm]{./rc/colab.png}\\
+      $\blacktriangleright$ \textbf{\href{https://colab.research.google.com}{colab.research.google.com}}
+    \end{center}
+
+    \begin{enumerate}
+      \item Cliquez sur l'onglet \menu{GitHub}
+      \item Dans la barre de recherche, tapez \texttt{FlorentF9}, puis sélectionnez le dépôt \texttt{SupGalilee-tdstats}.
+      \item Cliquez sur un TD pour l'ouvrir (\texttt{TDX-eleve.ipynb})
+      \item Vérifiez que vous êtes connecté à votre compte Google (icône en haut à droite).
+      \item Cliquez sur \menu{Copier sur Drive} afin de pouvoir sauvegarder vos modifications.
+      \item \menu{Partager} avec \texttt{florent.forest9@gmail.com} pour collaborer en temps réel.
+    \end{enumerate}
+
+  \end{frame}
+
+  \begin{frame}{Utilisation de Colab (suite)}
+
+    Un notebook est constitué de \emph{cellules} pouvant contenir du texte (Markdown/TeX/HTML) ou du code (ici Python).
+
+    \begin{block}{Commandes de base et raccourcis}
+      \small{
+      \begin{tabular}{ll}
+        Clic ou \keys{\arrowkeyup}/\keys{\arrowkeydown} & Sélectionner et changer de cellule.\\
+        Clic ou \keys{\return} & Entrer en mode \emph{modification}. \\
+        \keys{\esc} & Sortir du mode \emph{modification}. \\
+        \keys{\shift+\return} & Exécuter une cellule. \\
+        \keys{A}/\keys{B} & Insérer une cellule de code au-dessus/en-dessous.\\
+        Clic sur \menu{+ Texte} & Insérer une cellule de texte.\\
+        \keys{\ctrl+M} \keys{D} & Supprimer une cellule.\\
+        \keys{\ctrl+M} \keys{J}/\keys{K} & Déplacer une cellule vers le bas/haut.\\
+      \end{tabular}
+      }
+    \end{block}
+
+  \end{frame}
+
+  \begin{frame}{Planning prévisionnel}
+    \centering
+    \begin{enumerate}
+      \item[17/09] Présentation
+      \item[18/09] TD1
+      \item[24/09] correction TD1 + TD2
+      \item[01/10] correction TD2 + TD3
+      \item[08/10] TD3
+      \item[15/10] correction TD3 + TD4
+      \item[22/10] correction TD4 + discussions finales 
+    \end{enumerate}
+  \end{frame}
+
+\end{document}
